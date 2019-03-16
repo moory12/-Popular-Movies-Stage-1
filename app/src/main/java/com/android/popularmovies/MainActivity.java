@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     int counter = 0;
     Context context;
     String oldjson;
+    String lastCall;
 
 
 
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         queryTask = new QueryTask();
         oldjson = "";
         context = this;
+        lastCall = "https://api.themoviedb.org/3/movie/now_playing?api_key="+getResources().getString(R.string.tmdb_api_key)+"&language=en-US";
 
         moviesArrayList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(isOnline()){
             Uri uri = Uri.parse("https://api.themoviedb.org/3/movie/now_playing?api_key="+getResources().getString(R.string.tmdb_api_key)+"&language=en-US");
+            lastCall = "https://api.themoviedb.org/3/movie/now_playing?api_key="+getResources().getString(R.string.tmdb_api_key)+"&language=en-US";
             try {
                 URL url = new URL(uri.toString());
                 queryTask.execute(url);
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onRefresh() {
                 queryTask = new QueryTask();
                 if(isOnline()){
-                    Uri uri = Uri.parse("https://api.themoviedb.org/3/movie/now_playing?api_key="+getResources().getString(R.string.tmdb_api_key)+"&language=en-US");
+                    Uri uri = Uri.parse(lastCall);
                     try {
                         URL url = new URL(uri.toString());
                          queryTask.execute(url);
@@ -136,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 queryTask = new QueryTask();
                 if(isOnline()){
                     Uri uri = Uri.parse("https://api.themoviedb.org/3/movie/top_rated?api_key="+getResources().getString(R.string.tmdb_api_key)+"&language=en-US");
+                    lastCall = "https://api.themoviedb.org/3/movie/top_rated?api_key="+getResources().getString(R.string.tmdb_api_key)+"&language=en-US";
                     try {
                         URL url = new URL(uri.toString());
                         queryTask.execute(url);
@@ -165,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 queryTask = new QueryTask();
                 if(isOnline()){
                     Uri uri = Uri.parse("https://api.themoviedb.org/3/movie/popular?api_key="+getResources().getString(R.string.tmdb_api_key)+"&language=en-US");
+                    lastCall = "https://api.themoviedb.org/3/movie/popular?api_key="+getResources().getString(R.string.tmdb_api_key)+"&language=en-US";
                     try {
                         URL url = new URL(uri.toString());
                         queryTask.execute(url);
